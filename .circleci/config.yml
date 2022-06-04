@@ -11,7 +11,12 @@ jobs:
     steps:
       - run:
           name: "Print Hello"
-          command: "echo Hello"
+          command: echo "Hello" > output.txt 
+    persist_to_workspace:
+      root: /tmp/dir
+      paths:
+        - output.txt
+
 
   print_world:
     docker:
@@ -19,7 +24,9 @@ jobs:
     steps:
       - run:
           name: "Print World"
-          command: "echo World"
+          command: cat output.txt
+    attach_workspace:
+      at: /tmp/dir
 
   printing_env_var:
     docker:
