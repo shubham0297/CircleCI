@@ -22,11 +22,11 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
+      - attach_workspace:
+          at: /tmp
       - run:
           name: "Print World"
           command: cat /tmp/output.txt
-      - attach_workspace:
-          at: /tmp
 
   printing_env_var:
     docker:
