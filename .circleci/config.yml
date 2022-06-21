@@ -269,7 +269,6 @@ jobs:
             fingerprints: ["09:1e:92:15:83:8d:67:e7:ee:99:cc:df:66:3c:9c:23"]
         - attach_workspace:
           at: ~/
-        - install_tar
 
         - run:
             name: Install AWS CLI
