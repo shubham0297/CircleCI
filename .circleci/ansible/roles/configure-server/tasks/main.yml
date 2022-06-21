@@ -19,6 +19,7 @@
   become: true
   npm:
     name: pm2
+    registry: https://registry.npmjs.com/
     global: yes
     production: yes
     state: present
