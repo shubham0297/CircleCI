@@ -14,17 +14,20 @@
     state: present
 
 - name: Copying the articfact from local to EC2
+  become: true
   copy:
     src: /root/project/artifact.tar.gz
     dest: /home/ec2-user/
 
 
 - name: Uncompress Backend
+  become: true
   shell: |
     cd /home/ec2-user
     tar xvzf artifact.tar.gz -C .
     
 - name: Starting the app
+  become: true
   shell: |
     cd /home/ec2-user
     npm install
