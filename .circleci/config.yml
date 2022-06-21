@@ -312,6 +312,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install AWS CLI
+          command: |
+            apk add tar
+            
+      - run:
           name: Install curl
           command: |
             apk add curl      
@@ -320,18 +325,15 @@ jobs:
           command: |
             apk add nodejs
             apk add npm
-      - run:
-          name: Install AWS CLI
-          command: |
-            apk add tar
-      - run:
-          name: Get backend url
-          command: |
-            export BACKEND_IP=$(aws ec2 describe-instances --filters Name=tag:Name,Values=backend* --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            echo "${BACKEND_IP}"
+      
+      # - run:
+      #     name: Get backend url
+      #     command: |
+      #       echo "${BACKEND_IP}"
       - run:
           name: Backend smoke test.
           command: |
+            export BACKEND_IP=$(aws ec2 describe-instances --filters Name=tag:Name,Values=backend* --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
