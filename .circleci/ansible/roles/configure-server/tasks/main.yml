@@ -1,25 +1,21 @@
-- name: "Update apt packages."
+---
+- name: "add nodejs from node source"
   become: true
-  apt:
-    update_cache: yes
+  shell:
+    curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
+    
 
-- name: "Upgrade packages"
-  become: true
-  apt:
-    upgrade: yes
-
-- name: "Install NodeJS and NPM "
+- name: "install dependencies."
   become: true
   apt:
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
 
-- name: "Install pm2"
-  become: true
+- name: "install pm2"
+  #become: true
   npm:
     name: pm2
-    registry: https://registry.npmjs.com/
     global: yes
-    production: yes
-    state: present
+    #production: yes
+    #state: present
